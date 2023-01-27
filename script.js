@@ -17,6 +17,7 @@ diceel.classList.add("hidden")
 let currentScore = 0
 let scores = [0, 0]
 let activePlayer = 0
+let playing = true
 
 // this is for selecting the dice 
 btnRoll.addEventListener("click", () => {
@@ -28,15 +29,32 @@ btnRoll.addEventListener("click", () => {
     if (dice !== 1) {
         currentScore += dice
         document.getElementById(`current--${activePlayer}`).textContent = currentScore
-        
+
     }
     else {
-        document.getElementById(`current--${activePlayer}`).textContent = 0
-        currentScore = 0
-        document.querySelector(`.player--${activePlayer}`).classList.remove("player--active")
-        activePlayer = activePlayer === 0 ? 1 : 0
-        document.querySelector(`.player--${activePlayer}`).classList.add("player--active")
+        switchPlayer()
     }
 
     // console.log(dice)
 })
+
+btnHold.addEventListener('click', () => {
+    scores[activePlayer] += currentScore
+    document.getElementById(`score--${activePlayer}`).textContent = scores[activePlayer]
+    if (scores[activePlayer]>=100) {
+        document.querySelector(`.player--${activePlayer}`).classList.add("player--winner")
+        document.querySelector(`.player--${activePlayer}`).classList.remove("player--active")
+    } else {
+        
+    }
+    switchPlayer()
+    // console.log(scores)
+})
+
+function switchPlayer() {
+    document.getElementById(`current--${activePlayer}`).textContent = 0
+    currentScore = 0
+    document.querySelector(`.player--${activePlayer}`).classList.remove("player--active")
+    activePlayer = activePlayer === 0 ? 1 : 0
+    document.querySelector(`.player--${activePlayer}`).classList.add("player--active")
+}
